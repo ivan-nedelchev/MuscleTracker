@@ -1,0 +1,11 @@
+[X] - Nav bar
+[X] - react router
+[] - Home page 
+[] - Register view
+[] - Login view
+[] - Init database 
+[] - Register controller
+[] - Login controller
+[] - Authentication controller
+[] - Logged in view
+
