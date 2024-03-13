@@ -1,0 +1,14 @@
+
+
+.header {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding-top: 10vh;
+    text-align: center;
+    font-size: 5vh;
+}
+.header h6 {
+    margin-top: 3vh;
+}
+.header h2 {
+    font-weight:900;
+}
