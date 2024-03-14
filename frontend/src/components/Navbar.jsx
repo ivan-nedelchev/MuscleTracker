@@ -19,7 +19,7 @@ const Navbar = () => {
         <span></span>
         <span></span>
       </div>
-      <ul class={ menuOpen ? 'open' : ''}>
+      <ul className={ menuOpen ? 'open' : ''}>
         <li>
           <NavLink to="/about">About</NavLink>
         </li>

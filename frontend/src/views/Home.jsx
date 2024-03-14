@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './home.css'
-const Home = async () => {
-
+const Home =  () => {
+    
     return (
         <div className='header'>
             <h2>The number one fitness tracker</h2>
