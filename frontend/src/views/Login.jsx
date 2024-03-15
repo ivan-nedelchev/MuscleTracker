@@ -6,14 +6,14 @@ const Login = () => {
     <div className='loginForm'>
       <h3>Login Page</h3>
       <form action="/login" method="post">
-        <label for="username">Username:</label>
+        <label htmlFor="username">Username:</label>
         <input
           type="text"
           id="username"
           name="username"
           required
         />
-        <label for="password"
+        <label htmlFor="password"
         >Password:</label>
         <input
           type="password"

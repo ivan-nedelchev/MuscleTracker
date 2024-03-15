@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import { User } from "./schemas/User";
-
+import { User } from "./schemas/User.js";
 const connectionString = 'mongodb://localhost:27017/carpost';
 
 export async function initDatabase() {

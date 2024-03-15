@@ -6,21 +6,21 @@ const Register = () => {
       <div className='registerForm'>
         <h3>Register Page</h3>
         <form action="/register" method="post">
-          <label for="username">Username:</label>
+          <label htmlFor="username">Username:</label>
           <input
             type="text"
             id="username"
             name="username"
             required
           />
-          <label for="email">Email:</label>
+          <label htmlFor="email">Email:</label>
           <input
             type="email"
             id="email"
             name="email"
             required
           />
-          <label for="password"
+          <label htmlFor="password"
           >Password:</label>
           <input
             type="password"
@@ -32,7 +32,7 @@ const Register = () => {
                    least 8 characters long"
             required
           />
-          <label for="repassword"
+          <label htmlFor="repassword"
           >Re-type Password:</label>
           <input
             type="password"
