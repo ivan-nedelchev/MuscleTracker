@@ -3,6 +3,7 @@
 [X] - Register view
 [X] - Login view
 [X] - Init database 
+[] - Request API
 [] - Register controller
 [] - Login controller
 [] - Authentication controller
