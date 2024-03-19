@@ -1,6 +1,10 @@
 import express from "express";
 import { PORT } from "./config.js";
 import { initDatabase } from "./models/index.js";
+import { User } from "./models/schemas/User.js";
+import bcrypt from "bcryptjs";
+
+const bcryptSalt = bcrypt.genSalt(10);
 
 initDatabase();
 const app = express();
@@ -18,4 +22,14 @@ app.listen(PORT, () => {
 // });
 app.post('/login', (req, res) => {
     console.log(req.body);   
+    res.json({name: "hello"})
+})
+app.post('/register', async (req, res) => {
+    const {username, email, password} = req.body;
+    const userDoc = await User.create({
+        username,
+        email,
+        password: bcrypt.hashSync(password, bcryptSalt)
+    })
+    res.json(userDoc)
 })

@@ -1,8 +1,11 @@
 import { post } from "../../api"
 let path = '/login';
 
-function loginUser(username, password) {
-    post(path, {username, password})
+async function loginUser(username, password) {
+    let response = await post(path, {username, password})
+
+    return response 
+        ? true : false;
 }
 
 export {

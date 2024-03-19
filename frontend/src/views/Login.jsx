@@ -1,12 +1,18 @@
 import React from 'react';
 import './login.css';
 import { loginUser } from '../controllers/auth/login';
-const loginHandler = (event) => {
+
+
+const loginHandler = async (event) => {
     event.preventDefault()
     let formData = new FormData(event.target)
     let username = formData.get("username");
     let password = formData.get("password");
-    loginUser(username, password)
+    let loginSuccess = await loginUser(username, password)
+    if(loginSuccess) {
+        console.log("wtf");
+
+    }
 }
 
 const Login = () => {

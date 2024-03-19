@@ -3,8 +3,6 @@ async function request(method, path, data) {
     let options = {};
     let response;
     // let userInfo = JSON.parse(localStorage.getItem('user'));
-    
-
     if(data) {
         options = {
             method,
@@ -24,9 +22,7 @@ async function request(method, path, data) {
         // }
         options.method = method;
         response = await fetch(url + path, options);
-        
     }
-   
     if(response.status != "204") {
         return response.json()
     }
