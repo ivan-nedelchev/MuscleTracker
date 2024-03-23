@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
 import "./register.css"
 import { post } from '../api';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const navigate = useNavigate();
     const registerUser = async (ev) => {
         ev.preventDefault()
-        await post('/register', {username, password, email})
+        let userFile = await post('/register', {username, password, email})
+        if(userFile) {
+            navigate('/')
+        }
     }
     return (
         <>

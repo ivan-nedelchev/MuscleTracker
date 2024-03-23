@@ -8,10 +8,11 @@ const loginHandler = async (event) => {
     let formData = new FormData(event.target)
     let username = formData.get("username");
     let password = formData.get("password");
-    let loginSuccess = await loginUser(username, password)
-    if(loginSuccess) {
-        console.log("wtf");
-
+    let res = await loginUser(username, password)
+    if (res.status != 401) {
+        console.log("Successful login");
+    } else {
+        console.log("Invalid credentials, try again");
     }
 }
 

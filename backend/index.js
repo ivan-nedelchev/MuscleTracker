@@ -3,33 +3,62 @@ import { PORT } from "./config.js";
 import { initDatabase } from "./models/index.js";
 import { User } from "./models/schemas/User.js";
 import bcrypt from "bcryptjs";
+import session from "express-session";
+import cors from 'cors';
 
-const bcryptSalt = bcrypt.genSalt(10);
-
-initDatabase();
+const bcryptSalt = bcrypt.genSaltSync(10);
 const app = express();
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); //fix later, allows every origin
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+initDatabase();
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        credentials: true,
+    })
+);
+app.use(session({
+    secret: 'idkWh@tToWriteH3r3',
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        sameSite: "lax"
+    }
+})
+);
 app.use(express.json());
 app.listen(PORT, () => {
     console.log(`App is listening to port: ${PORT}`);
 });
-// app.get('/', (req, res) => {
-//     //res.json({username : "Gosho"})
-// });
+
 app.post('/login', (req, res) => {
-    console.log(req.body);   
-    res.json({name: "hello"})
+    let session = req.session;
+    if (session.user) {
+        console.log(JSON.parse(session.user));
+    } else {
+        console.log('Bad login attempt');
+        res.status(401).send();
+    }
+});
+app.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+        console.log('destroying session');
+        if (err) {
+            console.error('Error destroying session:', err);
+            res.sendStatus(500); // Server error
+        } else {
+            console.log('clearing cookie');
+            res.clearCookie('connect.sid', { path: '/', domain: 'localhost' }).send()
+        }
+    });
 })
 app.post('/register', async (req, res) => {
-    const {username, email, password} = req.body;
+    const { username, email, password } = req.body;
     const userDoc = await User.create({
         username,
         email,
         password: bcrypt.hashSync(password, bcryptSalt)
     })
-    res.json(userDoc)
+    if (userDoc) {
+        req.session.user = JSON.stringify({ username, email });
+        res.json({ user: username })
+    }
 })

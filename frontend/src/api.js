@@ -2,28 +2,22 @@ const url = 'http://localhost:5555';
 async function request(method, path, data) {
     let options = {};
     let response;
-    // let userInfo = JSON.parse(localStorage.getItem('user'));
-    if(data) {
+    if (data) {
         options = {
             method,
-            headers : {
-            "Content-type" : "application/json",
+            headers: {
+                "Content-type": "application/json",
             },
-            body : JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: 'include'
         }
-        // if(userInfo) {
-        //     options.headers["X-Authorization"] = userInfo.accessToken;
-        // }
         response = await fetch(url + path, options);
     } else {
-        // if(userInfo) {
-        //     options.headers = {}
-        //     options.headers["X-Authorization"] = userInfo.accessToken;
-        // }
         options.method = method;
+        options.credentials = 'include'
         response = await fetch(url + path, options);
     }
-    if(response.status != "204") {
+    if (response.status != "204") {
         return response.json()
     }
 }
