@@ -22,34 +22,27 @@ app.use(session({
     cookie: {
         sameSite: "lax"
     }
-})
-);
+}));
 app.use(express.json());
 app.listen(PORT, () => {
     console.log(`App is listening to port: ${PORT}`);
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     let session = req.session;
-    if (session.user) {
-        console.log(JSON.parse(session.user));
-    } else {
+    const {username, password} = req.body
+    const user = await User.findOne({ username });
+    if(user) {
+        const comparePassword = bcrypt.compareSync(password, user.password)
+        if(comparePassword) {
+            req.session.user = JSON.stringify({username, password})
+            res.json(username)
+        }
+    }else {
         console.log('Bad login attempt');
         res.status(401).send();
     }
 });
-app.post('/logout', (req, res) => {
-    req.session.destroy(err => {
-        console.log('destroying session');
-        if (err) {
-            console.error('Error destroying session:', err);
-            res.sendStatus(500); // Server error
-        } else {
-            console.log('clearing cookie');
-            res.clearCookie('connect.sid', { path: '/', domain: 'localhost' }).send()
-        }
-    });
-})
 app.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
     const userDoc = await User.create({
@@ -61,4 +54,18 @@ app.post('/register', async (req, res) => {
         req.session.user = JSON.stringify({ username, email });
         res.json({ user: username })
     }
+})
+app.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+        console.log('destroying session');
+        if (err) {
+            console.error('Error destroying session:', err);
+            res.sendStatus(500); // Server error
+        } else {
+            console.log('clearing cookie');
+            res
+                .clearCookie('connect.sid', { path: '/', domain: 'localhost' })
+                .send()
+        }
+    });
 })

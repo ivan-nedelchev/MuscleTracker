@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const router = Router();
 router.post('/login', async (req, res) => {
+    const [username, password] = req.body
+    const userExists = await User.findOne({ username });
     try {
         const username = req.body.username;
         const password = req.body.password;
