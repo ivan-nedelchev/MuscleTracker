@@ -1,6 +1,7 @@
 import React from 'react';
 import './login.css';
 import { loginUser } from '../controllers/auth/login';
+import { saveUser } from '../controllers/auth/auth';
 
 
 const loginHandler = async (event) => {
@@ -10,6 +11,7 @@ const loginHandler = async (event) => {
     let password = formData.get("password");
     let res = await loginUser(username, password)
     if (res.status != 401) {
+        saveUser(res)
         console.log("Successful login");
     } else {
         console.log("Invalid credentials, try again");

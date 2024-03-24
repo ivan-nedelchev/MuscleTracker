@@ -52,7 +52,7 @@ app.post('/register', async (req, res) => {
     })
     if (userDoc) {
         req.session.user = JSON.stringify({ username, email });
-        res.json({ user: username })
+        res.json({ username })
     }
 })
 app.post('/logout', (req, res) => {

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import "./register.css"
 import { post } from '../api';
 import { useNavigate } from 'react-router-dom';
+import { saveUser } from '../controllers/auth/auth';
 
 const Register = () => {
     const [username, setUsername] = useState("");
@@ -12,6 +13,8 @@ const Register = () => {
         ev.preventDefault()
         let userFile = await post('/register', {username, password, email})
         if(userFile) {
+            console.log(userFile);
+            saveUser(userFile)
             navigate('/')
         }
     }
